@@ -32,9 +32,9 @@ export const Systray: React.FC<SystrayProps> = ({ icon, systrayOuput }) => {
             onMouseMove={() => {
                 systrayOuput.onHoverMove(icon.id)
             }}
-            className="icon-button"
+            className="cursor-pointer"
         >
-            <img className="icon-icon" src={icon.iconUrl} />
+            <img src={icon.iconUrl} />
         </button>
     )
 }

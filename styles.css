@@ -1,226 +1,91 @@
-/**
- * Import the Nerdfonts icon font.
- * Ref https://www.nerdfonts.com/cheat-sheet for a cheatsheet of available Nerdfonts icons.
- */
+@import "tailwindcss";
 @import "https://www.nerdfonts.com/assets/css/webfont.css";
 
+@theme {
+  --color-main: rgba(234, 154, 151, 1);
+  --color-bg: rgba(31, 31, 35, 0.9);
+  --color-font: rgba(255, 255, 255, 0.9);
+}
+
 :root {
-    --main-color: rgba(234, 154, 151, 1);
-    --background-color: rgba(31, 31, 35, 0.9);
-    --font-color: rgba(255, 255, 255, 0.9);
-    user-select: none;
+  --main-color: rgba(234, 154, 151, 1);
+  --background-color: rgba(31, 31, 35, 0.9);
+  --font-color: rgba(255, 255, 255, 0.9);
+  user-select: none;
 }
 
 ::placeholder {
-    color: rgb(255 255 255 / 60%);
+  color: rgb(255 255 255 / 60%);
 }
 
 i {
-    color: var(--main-color);
-    margin-right: 2px;
+  color: var(--main-color);
+  margin-right: 2px;
 }
 
-body {
-    color: var(--font-color);
-    font-family: "FiraMono Nerd Font Mono", monospace;
-    font-size: 12px;
-    overflow: hidden;
-}
-
-html,
-body,
-#root {
-    height: 100%;
+html, body, #root {
+  height: 100%;
 }
 
 #root {
-    background: transparent;
+  background: transparent;
 }
 
-.app {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    align-items: center;
-    height: 100%;
-    /* padding app */
-    padding: 2px 0.5vw;
-    white-space: nowrap;
-}
-
-.left,
-.center,
-.right {
-    display: flex;
-    align-items: center;
-}
-
-.center {
-    justify-self: center;
-}
-
-.right {
-    justify-self: end;
-}
-
-.keyboard,
-.logo,
-.binding-mode,
-.tiling-direction,
-.network,
-.memory,
-.cpu,
-.battery {
-    display: flex;
-    align-items: center;
-    color: var(--font-color);
-}
-
-.logo {
-    gap: 0.25vw;
-    margin-right: 10px !important;
-}
-
-.workspaces {
-    display: flex;
-    align-items: center;
-}
-
-.workspace {
-    background: rgb(255 255 255 / 5%);
-    margin-right: 4px;
-    padding: 3px 8px;
-    color: var(--font-color);
-    border: none;
-    border-radius: 2px;
-    cursor: pointer;
-    transition:
-        all 0.3s,
-        transform 0.3s;
-
-    &.displayed {
-        background: rgb(255 255 255 / 15%) !important;
-    }
-
-    &.focused,
-    &:hover {
-        background: var(--main-color);
-        transform: scale(0.9);
-    }
-}
-
-.binding-mode,
-.tiling-direction {
-    background: rgb(255 255 255 / 15%);
-    color: var(--font-color);
-    border-radius: 2px;
-    line-height: 1;
-    padding: 4px 8px;
-    border: 0;
-    cursor: pointer;
-}
-
-.binding-mode {
-    margin-right: 4px;
-}
-
-.cpu .high-usage {
-    color: #900029;
-}
-
-.battery {
-    position: relative;
-}
-
-.battery .charging-icon {
-    position: absolute;
-    font-size: 7px;
-    left: -8px;
-    top: 3px;
-}
-
-.ico {
-    margin-top: -2px;
-}
-
-.box {
-    background: var(--background-color);
-    border: 1px solid var(--main-color);
-    padding: 0.5em 1em;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    backdrop-filter: invert(1);
-    transition:
-        all 0.3s,
-        transform 0.3s;
-}
-
-.active-app {
-    padding-left: 0.5em;
-}
-
-.active-app-icons .nf {
-    color: var(--font-color) !important;
-}
-
-.network-item {
-    display: flex;
-    align-items: center;
-    font-size: 10px;
-}
-
-.network {
-    gap: 0.5em;
-}
-
-.shortcut {
-    background: var(--background-color);
-    padding: 5px 8px;
-    color: var(--font-color);
-    border: 2px solid var(--main-color) !important;
-    border-radius: 2px;
-    cursor: pointer;
-    transition:
-        all 0.3s,
-        transform 0.3s;
-
-    &.displayed {
-        background: rgb(255 255 255 / 15%);
-    }
-
-    &.focused,
-    &:hover {
-        background: var(--main-color);
-        transform: scale(0.9);
-    }
-}
-
-.shortcut .nf {
-    color: var(--font-color);
-}
-
-.clean-button {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    color: var(--font-color);
-}
-
-.settings {
-    background: rgb(255 255 255 / 15%);
-    margin-right: 4px;
-    padding: 3px 8px;
-    color: var(--font-color);
-    border: none;
-    border-radius: 2px;
-    cursor: pointer;
-    transition:
-        all 0.3s,
-        transform 0.3s;
-
-    &.focused,
-    &:hover {
-        background: var(--main-color);
-        transform: scale(0.9);
-    }
+/* Custom utility classes for specific behaviors */
+@layer utilities {
+  .box {
+    @apply bg-bg border border-main px-[1em] py-[0.5em] rounded-lg flex items-center backdrop-invert transition-all duration-300;
+  }
+  
+  .workspace {
+    @apply bg-white/5 mr-1 px-2 py-0.75 text-font border-none rounded-sm cursor-pointer transition-all duration-300;
+  }
+  
+  .workspace.displayed {
+    @apply !bg-white/15;
+  }
+  
+  .workspace.focused,
+  .workspace:hover {
+    @apply bg-main scale-90;
+  }
+  
+  .shortcut {
+    @apply bg-bg px-2 py-1.25 text-font border-2 border-main rounded-sm cursor-pointer transition-all duration-300;
+  }
+  
+  .shortcut.displayed {
+    @apply bg-white/15;
+  }
+  
+  .shortcut.focused,
+  .shortcut:hover {
+    @apply bg-main scale-90;
+  }
+  
+  .settings {
+    @apply bg-white/15 mr-1 px-2 py-0.75 text-font border-none rounded-sm cursor-pointer transition-all duration-300;
+  }
+  
+  .settings.focused,
+  .settings:hover {
+    @apply bg-main scale-90;
+  }
+  
+  .clean-button {
+    @apply bg-transparent border-none cursor-pointer text-font;
+  }
+  
+  .binding-mode,
+  .tiling-direction {
+    @apply bg-white/15 text-font rounded-sm leading-none px-2 py-1 border-0 cursor-pointer;
+  }
+  
+  .high-usage {
+    @apply text-[#900029];
+  }
+  
+  .charging-icon {
+    @apply absolute text-icon-sm left-[-8px] top-[3px];
+  }
 }

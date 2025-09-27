@@ -7,6 +7,7 @@
         "serve": "vite",
         "format": "prettier -w ."
     },
+    "type": "module",
     "keywords": [],
     "author": "",
     "license": "ISC",
@@ -17,9 +18,11 @@
         "semi": false
     },
     "dependencies": {
+        "@tailwindcss/vite": "^4.1.13",
         "@vitejs/plugin-react": "^4.3.2",
         "react": "^18.3.1",
         "react-dom": "^18.3.1",
+        "tailwindcss": "^4.1.13",
         "vite": "npm:rolldown-vite@7.1.12",
         "zebar": "^3.1.1"
     },

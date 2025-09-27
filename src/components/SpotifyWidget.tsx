@@ -1,31 +1,6 @@
 import { spotifyService } from "../utils"
 import React from "react"
 
-const style: React.CSSProperties = {
-    textDecoration: "none",
-    color: "var(--font-color)",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-}
-
-const settingsStyle: React.CSSProperties = {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    gap: "5px",
-    paddingRight: "10px",
-}
-
-const iconStyle: React.CSSProperties = {
-    cursor: "pointer",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    color: "var(--font-color)",
-    borderRadius: "50%",
-}
-
 export const SpotifyWidget = () => {
     const [song, setSong] = React.useState("Fetching...")
     const [showSettings, setShowSettings] = React.useState(false)
@@ -58,36 +33,36 @@ export const SpotifyWidget = () => {
 
     return (
         <button
-            className="clean-button"
+            className="clean-button no-underline text-font flex justify-center items-center"
             onMouseEnter={() => setShowSettings(true)}
             onMouseLeave={() => setShowSettings(false)}
-            style={style}
         >
-            <a className="logo" href="spotify:home" target="_blank" style={style}>
+            <a
+                className="flex items-center gap-0.25vw no-underline text-font"
+                href="spotify:home"
+                target="_blank"
+            >
                 <i className="nf nf-fa-spotify"></i>
                 {song.length > maxSongLength ? song.substring(0, maxSongLength) + "..." : song}
             </a>
             {showSettings && !["fetching...", "Error", ""].includes(song) ? (
-                <div style={settingsStyle}>
+                <div className="flex justify-center items-center gap-1.25 pr-2.5">
                     <button
-                        className="nf nf-md-skip_previous clean-button"
-                        style={iconStyle}
+                        className="nf nf-md-skip_previous clean-button flex justify-center items-center text-font rounded-full cursor-pointer"
                         onClick={async () => {
                             await spotifyService.previousSong()
                             setTimeout(async () => await updateSong(), 1000)
                         }}
                     ></button>
                     <button
-                        className="nf nf-md-play_pause clean-button"
-                        style={iconStyle}
+                        className="nf nf-md-play_pause clean-button flex justify-center items-center text-font rounded-full cursor-pointer"
                         onClick={async () => {
                             await spotifyService.playPause()
                             setTimeout(async () => await updateSong(), 1000)
                         }}
                     ></button>
                     <button
-                        className="nf nf-md-skip_next clean-button"
-                        style={iconStyle}
+                        className="nf nf-md-skip_next clean-button flex justify-center items-center text-font rounded-full cursor-pointer"
                         onClick={async () => {
                             await spotifyService.skipSong()
                             setTimeout(async () => await updateSong(), 1000)

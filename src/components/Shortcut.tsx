@@ -8,12 +8,6 @@ interface ShortcutProps {
 }
 
 export const Shortcut: React.FC<ShortcutProps> = ({ commandRunner, commands, iconClass, name }) => {
-    const style = {
-        cursor: "pointer",
-        fontSize: "10px",
-        marginLeft: "5px",
-    }
-
     const onClick = () => {
         for (const command of commands) {
             commandRunner(command)
@@ -21,7 +15,10 @@ export const Shortcut: React.FC<ShortcutProps> = ({ commandRunner, commands, ico
     }
 
     return (
-        <button className="shortcut clean-button" style={style} onClick={() => onClick()}>
+        <button
+            className="shortcut clean-button text-xs ml-1.25 [&_.nf]:text-font"
+            onClick={() => onClick()}
+        >
             <i className={`nf ${iconClass}`}></i>
             <span>{name}</span>
         </button>

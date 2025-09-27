@@ -89,15 +89,15 @@ export const App: React.FC = () => {
     }
 
     return (
-        <div className="app">
-            <div className="left">
+        <div className="grid grid-cols-3 items-center h-full px-0.5vw py-0.5 whitespace-nowrap text-font font-mono text-sm overflow-hidden">
+            <div className="flex items-center">
                 <div className="box">
-                    <div className="logo">
-                        <i className="nf nf-custom-windows ico"></i>
+                    <div className="flex items-center gap-0.25vw mr-2.5">
+                        <i className="nf nf-custom-windows -mt-0.5"></i>
                         {output.host?.friendlyOsVersion}
                     </div>
                     {output.glazewm && (
-                        <div className="workspaces">
+                        <div className="flex items-center">
                             {output.glazewm.currentWorkspaces.map((workspace) => (
                                 <button
                                     className={`workspace ${workspace.hasFocus && "focused"} ${workspace.isDisplayed && "displayed"}`}
@@ -116,7 +116,7 @@ export const App: React.FC = () => {
                 </div>
 
                 {showShortcuts && output.glazewm && (
-                    <div className="workspaces">
+                    <div className="flex items-center">
                         <Shortcut
                             commandRunner={output.glazewm.runCommand}
                             commands={[`shell-exec ${keys.browserPath}`]}
@@ -133,7 +133,7 @@ export const App: React.FC = () => {
                 )}
             </div>
 
-            <div className="center">
+            <div className="justify-self-center">
                 <div className="box">
                     {showSpotifyWidget && <SpotifyWidget />}
                     <i className="nf nf-md-calendar_month"></i>
@@ -152,14 +152,14 @@ export const App: React.FC = () => {
                 </div>
             </div>
 
-            <div className="right">
+            <div className="justify-self-end flex items-center">
                 {showGoogleSearch && output.glazewm && (
                     <GoogleSearch
                         commandRunner={output.glazewm.runCommand}
                         explorerPath={keys.explorerPath}
                     />
                 )}
-                <div className="box" style={{ gap: "4px" }}>
+                <div className="box gap-1">
                     {output.systray &&
                         output.systray.icons.map((icon) => (
                             <Systray icon={icon} systrayOuput={output.systray!} />
@@ -167,7 +167,7 @@ export const App: React.FC = () => {
                     {output.glazewm && (
                         <>
                             {output.glazewm.bindingModes.map((bindingMode) => (
-                                <button className="binding-mode" key={bindingMode.name}>
+                                <button className="binding-mode mr-1" key={bindingMode.name}>
                                     {bindingMode.displayName ?? bindingMode.name}
                                 </button>
                             ))}
@@ -205,18 +205,11 @@ export const App: React.FC = () => {
                         ]}
                         output={output}
                     />
-                    <div
-                        style={{
-                            display: "flex",
-                            flexDirection: "row",
-                            alignItems: "center",
-                            gap: "4px",
-                        }}
-                    >
+                    <div className="flex flex-row items-center gap-1">
                         {/* memory */}
                         {output.memory && (
                             <button
-                                className="memory clean-button"
+                                className="clean-button flex items-center text-font"
                                 onClick={() => output.glazewm!.runCommand("shell-exec taskmgr")}
                             >
                                 <i className="nf nf-fae-chip"></i>
@@ -227,12 +220,10 @@ export const App: React.FC = () => {
                         {/* cpu */}
                         {output.cpu && (
                             <button
-                                className="cpu clean-button"
+                                className="clean-button flex items-center"
                                 onClick={() => output.glazewm!.runCommand("shell-exec taskmgr")}
                             >
                                 <i className="nf nf-oct-cpu"></i>
-
-                                {/* Change the text color if the CPU usage is high. */}
                                 <span className={output.cpu.usage > 85 ? "high-usage" : ""}>
                                     {Math.round(output.cpu.usage)}%
                                 </span>
@@ -241,8 +232,7 @@ export const App: React.FC = () => {
 
                         {/* battery */}
                         {output.battery && (
-                            <div className="battery">
-                                {/* Show icon for whether battery is charging. */}
+                            <div className="relative flex items-center">
                                 {output.battery.isCharging && (
                                     <i className="nf nf-md-power_plug charging-icon"></i>
                                 )}
@@ -253,10 +243,9 @@ export const App: React.FC = () => {
 
                         {/* weather */}
                         {output.weather && (
-                            <div className="weather">
+                            <div className="flex items-center">
                                 {getWeatherIcon(output.weather)}
-                                {Math.round(output.weather.celsiusTemp)}
-                                °C
+                                {Math.round(output.weather.celsiusTemp)}°C
                             </div>
                         )}
                     </div>

@@ -48,11 +48,11 @@ export const ActiveApp: React.FC<{ output: OutputMap }> = ({ output }) => {
     }
 
     return (
-        <div className="active-app">
+        <div className="pl-0.5em">
             {output.glazewm && output.glazewm.focusedWorkspace && (
-                <div className="active-app-icons">
+                <div className="[&_.nf]:text-font">
                     {output.glazewm.focusedWorkspace.children.map((child) => (
-                        <span key={child.id} className="app-icon">
+                        <span key={child.id}>
                             {child.type === "window" && getAppIcon(child.processName)}
                         </span>
                     ))}
