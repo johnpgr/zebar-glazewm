@@ -9,7 +9,7 @@ export const Box: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
   return (
     <div
       className={cn(
-        "bg-background border border-primary px-4 py-2 rounded-lg flex items-center backdrop-invert transition-all duration-300",
+        "bg-background border border-primary px-2 py-1 rounded-lg flex items-center backdrop-invert transition-all duration-300",
         className,
       )}
       {...rest}

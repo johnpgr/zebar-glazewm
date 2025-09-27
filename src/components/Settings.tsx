@@ -1,6 +1,7 @@
 import React from "react"
-import type { OutputMap } from "@/App"
-import { SettingsButton } from "./ui/buttons/SettingsButton"
+import type { OutputMap } from "@/lib/providers"
+import { Button } from "./ui/Button"
+import { Checkbox } from "./ui/Checkbox"
 
 export interface WidgetObj {
   name: string
@@ -17,27 +18,28 @@ export const Settings: React.FC<SettingsProps> = ({ widgetObj }) => {
   const [showSettings, setShowSettings] = React.useState(false)
 
   return (
-    <div className="relative flex justify-center items-center gap-0.25vw">
-      <SettingsButton
-        className="text-primary nf-cod-settings_gear"
+    <div className="relative flex justify-center items-center gap-1">
+      <Button
+        variant="secondary"
         onClick={() => setShowSettings(!showSettings)}
-      />
+      >
+        <i className="text-xs text-foreground nf-cod-settings_gear" />
+      </Button>
 
       {showSettings && (
-        <div className="flex justify-center items-center gap-2.5 cursor-pointer">
+        <div className="flex justify-center items-center gap-1 cursor-pointer">
           {widgetObj &&
             widgetObj.map(({ name, state, changeState }, index) => {
               return (
                 <div
                   key={index}
-                  className="inline-flex justify-center items-center gap-1.25 px-2.5 text-xs accent-main"
+                  className="inline-flex justify-center items-center gap-1 text-xs accent-main"
                 >
-                  <input
-                    type="checkbox"
+                  <Checkbox
                     id={name}
                     name={name}
                     checked={state}
-                    onChange={() => changeState(!state)}
+                    onCheckedChange={() => changeState(!state)}
                     className="cursor-pointer"
                   />
                   <label

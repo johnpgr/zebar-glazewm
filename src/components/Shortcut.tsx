@@ -1,5 +1,6 @@
 import type { GlazeWmOutput } from "zebar"
-import { ShortcutButton } from "./ui/buttons/ShortcutButton"
+import { Button } from "./ui/Button"
+import { Box } from "./ui/Box"
 
 interface ShortcutProps {
   commandRunner: GlazeWmOutput["runCommand"]
@@ -21,12 +22,11 @@ export const Shortcut: React.FC<ShortcutProps> = ({
   }
 
   return (
-    <ShortcutButton
-      className="text-xs ml-1.25"
-      onClick={() => onClick()}
-    >
-      <i className={`text-primary ${iconClass} text-primary`}></i>
-      <span>{name}</span>
-    </ShortcutButton>
+    <Box>
+      <Button variant="clean" className="gap-0.5" onClick={onClick}>
+        <i className={`text-primary ${iconClass} text-primary`}></i>
+        {name}
+      </Button>
+    </Box>
   )
 }

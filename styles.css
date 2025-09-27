@@ -1,7 +1,7 @@
+@import url("https://www.nerdfonts.com/assets/css/webfont.css");
 @import "tailwindcss";
 
 @theme inline {
-  --font-display: var(--display-font);
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
   --color-secondary: var(--secondary);
@@ -19,7 +19,6 @@
 }
 
 :root {
-  --display-font: 'FiraMono Nerd Font', 'Fira Mono', 'FiraCode-Retina', 'Fira Code', ui-monospace, SFMono-Regular, Menlo, Monaco, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   --radius: 0.5rem;
   --spacing: 0.5rem;
   --primary: rgba(234, 154, 151, 1);
@@ -35,11 +34,6 @@
   color: rgb(255 255 255 / 60%);
 }
 
-i {
-  color: var(--main-color);
-  margin-right: 2px;
-}
-
 html,
 body,
 #root {
@@ -48,4 +42,9 @@ body,
 
 #root {
   background: transparent;
+}
+
+i {
+  font-family: "NerdFontsSymbols Nerd Font";
+  font-style: normal;
 }

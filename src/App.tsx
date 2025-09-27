@@ -1,9 +1,5 @@
 import React from "react"
-import {
-  createProviderGroup,
-  type BatteryOutput,
-  type WeatherOutput,
-} from "zebar"
+import { type BatteryOutput, type WeatherOutput } from "zebar"
 import { ActiveApp } from "./components/ActiveApp"
 import { GoogleSearch } from "./components/GoogleSearch"
 import { Settings } from "./components/Settings"
@@ -11,26 +7,11 @@ import { Shortcut } from "./components/Shortcut"
 import { SpotifyWidget } from "./components/SpotifyWidget"
 import { Systray } from "./components/Systray"
 import { Box } from "./components/ui/Box"
-import { BindingModeButton } from "./components/ui/buttons/BindingModeButton"
-import { CleanButton } from "./components/ui/buttons/CleanButton"
-import { TilingDirectionButton } from "./components/ui/buttons/TilingDirectionButton"
-import WorkspaceButton from "./components/ui/buttons/WorkspaceButton"
 import { useLocalStorage } from "./hooks/useLocalStorage"
 import * as keys from "./lib/keys"
-
-const providers = createProviderGroup({
-  keyboard: { type: "keyboard" },
-  glazewm: { type: "glazewm" },
-  cpu: { type: "cpu" },
-  date: { type: "date", formatting: "EEE d MMM t" },
-  battery: { type: "battery" },
-  memory: { type: "memory" },
-  weather: { type: "weather" },
-  host: { type: "host" },
-  systray: { type: "systray" },
-})
-
-export type OutputMap = typeof providers.outputMap
+import { providers, type OutputMap } from "./lib/providers"
+import { Button } from "./components/ui/Button"
+import { cn } from "./lib/utils"
 
 const DATE_FORMATS = {
   short: Intl.DateTimeFormat("pt-BR", {
@@ -114,19 +95,18 @@ export const App: React.FC = () => {
   }, [])
 
   return (
-    <div className="grid grid-cols-3 items-center h-full px-0.5vw py-0.5 whitespace-nowrap text-font font-mono text-sm overflow-hidden">
-      <div className="flex items-center">
-        <Box>
-          <div className="flex items-center gap-0.25vw mr-2.5">
-            <i className="text-foreground nf-custom-windows -mt-0.5"></i>
+    <div className="grid grid-cols-3 items-center h-full px-0.5vw py-0.5 whitespace-nowrap text-foreground text-xs overflow-hidden mx-1.25">
+      <div className="flex items-center gap-1">
+        <Box className="gap-1">
+          <div className="flex items-center gap-0.25vw">
+            <i className="text-primary text-xs nf-custom-windows mr-0.5"></i>
             {output.host?.friendlyOsVersion}
           </div>
           {output.glazewm && (
-            <div className="flex items-center">
+            <div className="flex gap-0.5 items-center">
               {output.glazewm.currentWorkspaces.map((workspace) => (
-                <WorkspaceButton
-                  displayed={workspace.isDisplayed}
-                  focused={workspace.hasFocus}
+                <Button
+                  variant={workspace.hasFocus ? "default" : "secondary"}
                   onClick={() =>
                     output.glazewm!.runCommand(
                       `focus --workspace ${workspace.name}`,
@@ -135,14 +115,14 @@ export const App: React.FC = () => {
                   key={workspace.name}
                 >
                   {workspace.displayName ?? workspace.name}
-                </WorkspaceButton>
+                </Button>
               ))}
             </div>
           )}
         </Box>
 
         {showShortcuts && output.glazewm && (
-          <div className="flex items-center">
+          <div className="flex items-center gap-1">
             <Shortcut
               commandRunner={output.glazewm.runCommand}
               commands={[`shell-exec ${keys.browserPath}`]}
@@ -160,17 +140,19 @@ export const App: React.FC = () => {
       </div>
 
       <div className="justify-self-center">
-        <Box>
+        <Box className="gap-1">
           {showSpotifyWidget && <SpotifyWidget />}
           <i className="text-primary nf-md-calendar_month"></i>
-          <CleanButton
+          <Button
+            variant="clean"
+            className="cursor-default"
             onMouseEnter={() => setDateFormatter(DATE_FORMATS.long)}
             onMouseLeave={() => setDateFormatter(DATE_FORMATS.short)}
           >
             {output.date?.now
               ? dateFormatter.format(new Date(output.date.now))
               : ""}
-          </CleanButton>
+          </Button>
           {showActiveApp && output.glazewm && <ActiveApp output={output} />}
         </Box>
       </div>
@@ -190,17 +172,26 @@ export const App: React.FC = () => {
           {output.glazewm && (
             <>
               {output.glazewm.bindingModes.map((bindingMode) => (
-                <BindingModeButton className="mr-1" key={bindingMode.name}>
+                <Button variant="secondary" key={bindingMode.name}>
                   {bindingMode.displayName ?? bindingMode.name}
-                </BindingModeButton>
+                </Button>
               ))}
 
-              <TilingDirectionButton
-                className={`text-primary ${output.glazewm.tilingDirection === "horizontal" ? "nf-md-swap_horizontal" : "nf-md-swap_vertical"}`}
+              <Button
+                variant="secondary"
                 onClick={() =>
                   output.glazewm!.runCommand("toggle-tiling-direction")
                 }
-              />
+              >
+                <i
+                  className={cn("text-xs", {
+                    "nf-md-swap_horizontal":
+                      output.glazewm.tilingDirection === "horizontal",
+                    "nf-md-swap_vertical":
+                      output.glazewm.tilingDirection === "vertical",
+                  })}
+                />
+              </Button>
             </>
           )}
           <Settings
@@ -231,19 +222,21 @@ export const App: React.FC = () => {
           <div className="flex flex-row items-center gap-1">
             {/* memory */}
             {output.memory && (
-              <CleanButton
-                className="flex items-center text-font"
+              <Button
+                variant="clean"
+                className="gap-1"
                 onClick={() => output.glazewm!.runCommand("shell-exec taskmgr")}
               >
                 <i className="text-primary nf-fae-chip"></i>
                 {Math.round(output.memory.usage)}%
-              </CleanButton>
+              </Button>
             )}
 
             {/* cpu */}
             {output.cpu && (
-              <CleanButton
-                className="flex items-center"
+              <Button
+                variant="clean"
+                className="gap-1 -ml-1"
                 onClick={() => output.glazewm!.runCommand("shell-exec taskmgr")}
               >
                 <i className="text-primary nf-oct-cpu"></i>
@@ -254,12 +247,12 @@ export const App: React.FC = () => {
                 ) : (
                   <span>{Math.round(output.cpu.usage)}%</span>
                 )}
-              </CleanButton>
+              </Button>
             )}
 
             {/* battery */}
             {output.battery && (
-              <div className="relative flex items-center">
+              <div className="relative flex items-center gap-1">
                 {output.battery.isCharging && (
                   <span className="absolute text-[8px] left-[-8px] top-1 text-primary nf-md-power_plug" />
                 )}
@@ -270,7 +263,7 @@ export const App: React.FC = () => {
 
             {/* weather */}
             {output.weather && (
-              <div className="flex items-center">
+              <div className="flex items-center gap-1">
                 {getWeatherIcon(output.weather)}
                 {Math.round(output.weather.celsiusTemp)}°C
               </div>

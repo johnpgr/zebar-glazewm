@@ -1,4 +1,4 @@
-import type { OutputMap } from "@/App"
+import type { OutputMap } from "@/lib/providers"
 
 export const ActiveApp: React.FC<{ output: OutputMap }> = ({ output }) => {
   function getAppIcon(appId: string) {
