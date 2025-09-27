@@ -70,11 +70,11 @@ Instructions for obtaining the Spotify tokens are provided in the [Spotify](#spo
 
 ```js
 export default {
-    spotifyClientId: "<YOUR-SPOTIFY-CLIENT-ID>",
-    spotifyClientSecret: "<YOUR-SPOTIFY-CLIENT-SECRET>",
-    spotifyRefreshToken: "<YOUR-SPOTIFY-REFRESH-TOKEN>",
-    explorerPath: "<YOUR-EXPLORER-PATH>",
-    powershellPath: "<YOUR-POWERSHELL-PATH>",
+  spotifyClientId: "<YOUR-SPOTIFY-CLIENT-ID>",
+  spotifyClientSecret: "<YOUR-SPOTIFY-CLIENT-SECRET>",
+  spotifyRefreshToken: "<YOUR-SPOTIFY-REFRESH-TOKEN>",
+  explorerPath: "<YOUR-EXPLORER-PATH>",
+  powershellPath: "<YOUR-POWERSHELL-PATH>",
 }
 ```
 
@@ -162,10 +162,10 @@ To create a shorcut follow this example :
 
 ```jsx
 <Shortcut
-    commandRunner={output.glazewm.runCommand}
-    commands={["focus --workspace 2", `shell-exec ${config.powershellPath}`]}
-    iconClass="nf-cod-terminal_powershell"
-    name="Powershell"
+  commandRunner={output.glazewm.runCommand}
+  commands={["focus --workspace 2", `shell-exec ${config.powershellPath}`]}
+  iconClass="nf-cod-terminal_powershell"
+  name="Powershell"
 />
 ```
 

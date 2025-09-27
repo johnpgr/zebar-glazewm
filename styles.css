@@ -1,16 +1,33 @@
 @import "tailwindcss";
-@import "https://www.nerdfonts.com/assets/css/webfont.css";
 
-@theme {
-  --color-main: rgba(234, 154, 151, 1);
-  --color-bg: rgba(31, 31, 35, 0.9);
-  --color-font: rgba(255, 255, 255, 0.9);
+@theme inline {
+  --font-display: var(--display-font);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --spacing-sm: calc(var(--spacing) / 2);
+  --spacing-md: var(--spacing);
+  --spacing-lg: calc(var(--spacing) * 2);
+  --spacing-xl: calc(var(--spacing) * 3);
 }
 
 :root {
-  --main-color: rgba(234, 154, 151, 1);
-  --background-color: rgba(31, 31, 35, 0.9);
-  --font-color: rgba(255, 255, 255, 0.9);
+  --display-font: 'FiraMono Nerd Font', 'Fira Mono', 'FiraCode-Retina', 'Fira Code', ui-monospace, SFMono-Regular, Menlo, Monaco, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --radius: 0.5rem;
+  --spacing: 0.5rem;
+  --primary: rgba(234, 154, 151, 1);
+  --primary-foreground: rgba(255, 255, 255, 1);
+  --secondary: rgba(255,255,255,0.15);
+  --secondary-foreground: rgba(255, 255, 255, 1);
+  --background: rgba(31, 31, 35, 0.9);
+  --foreground: rgba(255, 255, 255, 0.9);
   user-select: none;
 }
 
@@ -23,69 +40,12 @@ i {
   margin-right: 2px;
 }
 
-html, body, #root {
+html,
+body,
+#root {
   height: 100%;
 }
 
 #root {
   background: transparent;
-}
-
-/* Custom utility classes for specific behaviors */
-@layer utilities {
-  .box {
-    @apply bg-bg border border-main px-[1em] py-[0.5em] rounded-lg flex items-center backdrop-invert transition-all duration-300;
-  }
-  
-  .workspace {
-    @apply bg-white/5 mr-1 px-2 py-0.75 text-font border-none rounded-sm cursor-pointer transition-all duration-300;
-  }
-  
-  .workspace.displayed {
-    @apply !bg-white/15;
-  }
-  
-  .workspace.focused,
-  .workspace:hover {
-    @apply bg-main scale-90;
-  }
-  
-  .shortcut {
-    @apply bg-bg px-2 py-1.25 text-font border-2 border-main rounded-sm cursor-pointer transition-all duration-300;
-  }
-  
-  .shortcut.displayed {
-    @apply bg-white/15;
-  }
-  
-  .shortcut.focused,
-  .shortcut:hover {
-    @apply bg-main scale-90;
-  }
-  
-  .settings {
-    @apply bg-white/15 mr-1 px-2 py-0.75 text-font border-none rounded-sm cursor-pointer transition-all duration-300;
-  }
-  
-  .settings.focused,
-  .settings:hover {
-    @apply bg-main scale-90;
-  }
-  
-  .clean-button {
-    @apply bg-transparent border-none cursor-pointer text-font;
-  }
-  
-  .binding-mode,
-  .tiling-direction {
-    @apply bg-white/15 text-font rounded-sm leading-none px-2 py-1 border-0 cursor-pointer;
-  }
-  
-  .high-usage {
-    @apply text-[#900029];
-  }
-  
-  .charging-icon {
-    @apply absolute text-icon-sm left-[-8px] top-[3px];
-  }
 }
