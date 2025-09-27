@@ -1,0 +1,39 @@
+{
+    // Visit https://aka.ms/tsconfig to read more about this file
+    "compilerOptions": {
+        // File Layout
+        "rootDir": "./src",
+        "outDir": "./dist",
+
+        // Environment Settings
+        "target": "ES2024",
+        "module": "ESNext",
+        "lib": ["ES2024", "DOM", "DOM.Iterable"],
+        "types": ["vite/client"],
+
+        // Other Outputs
+        "sourceMap": true,
+        "declaration": true,
+        "declarationMap": true,
+
+        // Typechecking Options
+        "strict": true,
+        "noUncheckedIndexedAccess": true,
+        "exactOptionalPropertyTypes": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "erasableSyntaxOnly": true,
+        "noFallthroughCasesInSwitch": true,
+        "noUncheckedSideEffectImports": true,
+
+        // Recommended Options
+        "jsx": "react-jsx",
+        "isolatedModules": true,
+        "moduleDetection": "force",
+        "moduleResolution": "bundler",
+        "allowImportingTsExtensions": true,
+        "noEmit": true,
+        "verbatimModuleSyntax": true,
+        "skipLibCheck": true
+    }
+}

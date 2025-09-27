@@ -5,8 +5,8 @@
 @import "https://www.nerdfonts.com/assets/css/webfont.css";
 
 :root {
-    --main-color: rgba(122, 80, 229, 0.95);
-    --background-color: linear-gradient(rgba(0, 0, 0, 0.90), rgba(14, 2, 20, 0.85));
+    --main-color: rgba(234, 154, 151, 1);
+    --background-color: rgba(31, 31, 35, 0.9);
     --font-color: rgba(255, 255, 255, 0.9);
     user-select: none;
 }
@@ -22,7 +22,7 @@ i {
 
 body {
     color: var(--font-color);
-    font-family: "FiraCode Nerd Font", monospace;
+    font-family: "FiraMono Nerd Font Mono", monospace;
     font-size: 12px;
     overflow: hidden;
 }
@@ -36,7 +36,6 @@ body,
 #root {
     background: transparent;
 }
-
 
 .app {
     display: grid;
@@ -71,7 +70,6 @@ body,
 .memory,
 .cpu,
 .battery {
-    margin-right: 20px !important;
     display: flex;
     align-items: center;
     color: var(--font-color);
@@ -95,7 +93,9 @@ body,
     border: none;
     border-radius: 2px;
     cursor: pointer;
-    transition: all 0.3s, transform 0.3s;
+    transition:
+        all 0.3s,
+        transform 0.3s;
 
     &.displayed {
         background: rgb(255 255 255 / 15%) !important;
@@ -138,15 +138,21 @@ body,
     top: 3px;
 }
 
+.ico {
+    margin-top: -2px;
+}
+
 .box {
     background: var(--background-color);
-    border: 2px solid var(--main-color);
+    border: 1px solid var(--main-color);
     padding: 0.5em 1em;
-    border-radius: 1em;
+    border-radius: 8px;
     display: flex;
     align-items: center;
     backdrop-filter: invert(1);
-    transition: all 0.3s, transform 0.3s;
+    transition:
+        all 0.3s,
+        transform 0.3s;
 }
 
 .active-app {
@@ -155,7 +161,6 @@ body,
 
 .active-app-icons .nf {
     color: var(--font-color) !important;
-    margin-right: 0.5em;
 }
 
 .network-item {
@@ -175,7 +180,9 @@ body,
     border: 2px solid var(--main-color) !important;
     border-radius: 2px;
     cursor: pointer;
-    transition: all 0.3s, transform 0.3s;
+    transition:
+        all 0.3s,
+        transform 0.3s;
 
     &.displayed {
         background: rgb(255 255 255 / 15%);
@@ -207,7 +214,9 @@ body,
     border: none;
     border-radius: 2px;
     cursor: pointer;
-    transition: all 0.3s, transform 0.3s;
+    transition:
+        all 0.3s,
+        transform 0.3s;
 
     &.focused,
     &:hover {
