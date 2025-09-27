@@ -19,26 +19,11 @@ Using TailwindCSS v4 and a Rose coloring
 
 ---
 
-<div align="center">
-
-# Quiet Velvet 🌸
-
-**Quiet Velvet is a custom taskbar built using [Zebar](https://github.com/glzr-io).**
-⬇️ Join the community ⬇️
-
-[![Discord invite][discord-badge]][discord-link]
-
-If you need assistance, please send me a message on Discord. My ID is `0h37`.
-
-![demo-quiet-velvet](https://raw.githubusercontent.com/LeoBessin/files/refs/heads/master/zebar/my_custom_zebar.gif)
-
-</div>
-
 ## Installation 📂
 
 Navigate to your `~/.glzr/zebar/` directory and clone this repository:
 
-- `git clone https://github.com/ariafatah0711/zebar-glazewm`
+- `git clone https://github.com/johnpgr/zebar-glazewm`
 
 Navigate to the repository and install the dependencies:
 
@@ -62,29 +47,27 @@ You should see `zebar-glazewm/main` in the Widget configurations!
 
 ## Configuration ⚙️
 
-You need to create a `config.js` file in the `zebar-glazewm/src/` directory.
+You need to create a `.env` file in the root directory.
 Enter the following key/value pairs in the file.
 These keys are not required for the build, so you can leave them as shown in the example.
 
 Instructions for obtaining the Spotify tokens are provided in the [Spotify](#spotify) section.
 
-```js
-export default {
-  spotifyClientId: "<YOUR-SPOTIFY-CLIENT-ID>",
-  spotifyClientSecret: "<YOUR-SPOTIFY-CLIENT-SECRET>",
-  spotifyRefreshToken: "<YOUR-SPOTIFY-REFRESH-TOKEN>",
-  explorerPath: "<YOUR-EXPLORER-PATH>",
-  powershellPath: "<YOUR-POWERSHELL-PATH>",
-}
+```sh
+VITE_SPOTIFY_CLIENT_ID="<YOUR-SPOTIFY-CLIENT-ID>"
+VITE_SPOTIFY_CLIENT_SECRET="<YOUR-SPOTIFY-CLIENT-SECRET>"
+VITE_SPOTIFY_REFRESH_TOKEN="<YOUR-SPOTIFY-REFRESH-TOKEN>"
+VITE_EXPLORER_PATH="<YOUR-EXPLORER-PATH>"
+VITE_POWERSHELL_PATH="<YOUR-POWERSHELL-PATH>"
 ```
 
 ## Customization 💅
 
 You can customize the style by modifying the following values in the `styles.css` file:
 
-- Main color: `--main-color`
-- Font color: `--font-color`
-- Background color: `--background-color`
+- Primary color: `--primary`
+- Foreground color: `--foreground`
+- Background color: `--background`
 
 If you use GlazeWM, you can rename your workspaces in the `~/.glzr/glazewm/config.yaml` file:
 

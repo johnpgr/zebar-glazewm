@@ -157,7 +157,7 @@ export const App: React.FC = () => {
         </Box>
       </div>
 
-      <div className="justify-self-end flex items-center">
+      <div className="justify-self-end flex gap-1 items-center">
         {showGoogleSearch && output.glazewm && (
           <GoogleSearch
             commandRunner={output.glazewm.runCommand}
