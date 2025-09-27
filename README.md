@@ -1,6 +1,6 @@
-# My Config by Aria
+# My Config by johnpgr
 
-- 🎯 [Dotfiles Windows by me](https://github.com/ariafatah0711/win_aria)
+Using TailwindCSS v4 and a Rose coloring
 
 ---
 
