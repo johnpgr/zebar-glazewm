@@ -1,6 +1,7 @@
 import { spotifyService } from "@/lib/spotify"
 import React from "react"
 import { Button } from "./ui/Button"
+import autoAnimate from "@formkit/auto-animate"
 
 export const SpotifyWidget = () => {
   const [song, setSong] = React.useState("Fetching...")
@@ -13,44 +14,65 @@ export const SpotifyWidget = () => {
     setSong(tempSong)
   }
 
-  let intervalId: number[] = []
+  const ref = React.useCallback((node: HTMLButtonElement | null) => {
+    if (node) {
+      autoAnimate(node)
+    }
+  }, [])
+
+  const intervalId = React.useRef<number[]>([])
+  const timeoutRef = React.useRef<number | null>(null)
   React.useEffect(() => {
     const updateAndSetInterval = async () => {
       await updateSong()
       const tempId = window.setInterval(async () => {
         await updateSong()
       }, 1000 * 10)
-      intervalId.push(tempId)
+      intervalId.current.push(tempId)
     }
 
     updateAndSetInterval()
 
     return () => {
-      for (const id of intervalId) {
+      for (const id of intervalId.current) {
         clearInterval(id)
+      }
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current)
       }
     }
   }, [])
 
   return (
     <Button
+      ref={ref}
       variant="clean"
-      onMouseEnter={() => setShowSettings(true)}
-      onMouseLeave={() => setShowSettings(false)}
+      onMouseEnter={() => {
+        if (timeoutRef.current) {
+          clearTimeout(timeoutRef.current)
+          timeoutRef.current = null
+        }
+        setShowSettings(true)
+      }}
+      onMouseLeave={() => {
+        timeoutRef.current = window.setTimeout(() => {
+          setShowSettings(false)
+        }, 300)
+      }}
       className="text-foreground no-underline"
     >
       <a
-        className="flex items-center gap-0.25vw no-underline"
+        className="flex items-center gap-1 no-underline"
         href="spotify:home"
         target="_blank"
       >
-        <i className="text-primary nf-fa-spotify mr-1"></i>
+        <i className="text-primary nf-fa-spotify"></i>
         {song.length > maxSongLength
           ? song.substring(0, maxSongLength) + "..."
           : song}
       </a>
       {showSettings && !["Fetching...", "Error", ""].includes(song) && (
-        <div className="gap-1.25 pr-2.5 ml-2">
+        <div className="gap-1.25 ml-1">
           <Button
             variant="clean"
             className="hover:text-foreground/80 transition-transform duration-200"

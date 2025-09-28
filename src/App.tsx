@@ -12,22 +12,7 @@ import * as keys from "./lib/keys"
 import { providers, type OutputMap } from "./lib/providers"
 import { Button } from "./components/ui/Button"
 import { cn } from "./lib/utils"
-
-const DATE_FORMATS = {
-  short: Intl.DateTimeFormat("pt-BR", {
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: false,
-  }),
-  long: Intl.DateTimeFormat("pt-BR", {
-    weekday: "long",
-    day: "2-digit",
-    month: "long",
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: false,
-  }),
-} as const
+import { CalendarWidget } from "./components/CalendarWidget"
 
 function getBatteryIcon(batteryOutput: BatteryOutput) {
   if (batteryOutput.chargePercent > 90)
@@ -88,7 +73,6 @@ export const App: React.FC = () => {
     "showSpotifyWidget",
     true,
   )
-  const [dateFormatter, setDateFormatter] = React.useState(DATE_FORMATS.short)
 
   React.useEffect(() => {
     providers.onOutput(() => setOutput(providers.outputMap))
@@ -108,7 +92,7 @@ export const App: React.FC = () => {
                 <Button
                   variant={workspace.hasFocus ? "default" : "secondary"}
                   onClick={() =>
-                    output.glazewm!.runCommand(
+                    output.glazewm?.runCommand(
                       `focus --workspace ${workspace.name}`,
                     )
                   }
@@ -127,13 +111,13 @@ export const App: React.FC = () => {
               commandRunner={output.glazewm.runCommand}
               commands={[`shell-exec ${keys.browserPath}`]}
               iconClass="nf-md-web"
-              name="edge"
+              name="Browser"
             />
             <Shortcut
               commandRunner={output.glazewm.runCommand}
-              commands={[`shell-exec ${keys.powershellPath} -nologo`]}
-              iconClass="nf-cod-terminal_powershell"
-              name="Powershell"
+              commands={[`shell-exec ${keys.terminalPath}`]}
+              iconClass="nf-cod-terminal"
+              name="Terminal"
             />
           </div>
         )}
@@ -142,27 +126,19 @@ export const App: React.FC = () => {
       <div className="justify-self-center">
         <Box className="gap-1">
           {showSpotifyWidget && <SpotifyWidget />}
-          <i className="text-primary nf-md-calendar_month"></i>
-          <Button
-            variant="clean"
-            className="cursor-default"
-            onMouseEnter={() => setDateFormatter(DATE_FORMATS.long)}
-            onMouseLeave={() => setDateFormatter(DATE_FORMATS.short)}
-          >
-            {output.date?.now
-              ? dateFormatter.format(new Date(output.date.now))
-              : ""}
-          </Button>
+          {output.date && output.glazewm && (
+            <CalendarWidget
+              dateOutput={output.date}
+              glazeWmOutput={output.glazewm}
+            />
+          )}
           {showActiveApp && output.glazewm && <ActiveApp output={output} />}
         </Box>
       </div>
 
       <div className="justify-self-end flex gap-1 items-center">
         {showGoogleSearch && output.glazewm && (
-          <GoogleSearch
-            commandRunner={output.glazewm.runCommand}
-            explorerPath={keys.explorerPath}
-          />
+          <GoogleSearch commandRunner={output.glazewm.runCommand} />
         )}
         <Box className="gap-1">
           {output.systray &&
@@ -202,7 +178,7 @@ export const App: React.FC = () => {
                 changeState: setShowSpotifyWidget,
               },
               {
-                name: "App",
+                name: "Active apps",
                 state: showActiveApp,
                 changeState: setShowActiveApp,
               },
@@ -225,7 +201,7 @@ export const App: React.FC = () => {
               <Button
                 variant="clean"
                 className="gap-1"
-                onClick={() => output.glazewm!.runCommand("shell-exec taskmgr")}
+                onClick={() => output.glazewm?.runCommand("shell-exec taskmgr")}
               >
                 <i className="text-primary nf-fae-chip"></i>
                 {Math.round(output.memory.usage)}%
@@ -237,7 +213,7 @@ export const App: React.FC = () => {
               <Button
                 variant="clean"
                 className="gap-1 -ml-1"
-                onClick={() => output.glazewm!.runCommand("shell-exec taskmgr")}
+                onClick={() => output.glazewm?.runCommand("shell-exec taskmgr")}
               >
                 <i className="text-primary nf-oct-cpu"></i>
                 {output.cpu.usage > 85 ? (

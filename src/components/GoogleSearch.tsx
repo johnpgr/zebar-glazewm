@@ -1,15 +1,14 @@
 import React from "react"
 import type { GlazeWmOutput } from "zebar"
 import { Box } from "./ui/Box"
+import * as keys from "@/lib/keys"
 
 export interface GoogleSearchProps {
   commandRunner: GlazeWmOutput["runCommand"]
-  explorerPath: string
 }
 
 export const GoogleSearch: React.FC<GoogleSearchProps> = ({
   commandRunner,
-  explorerPath,
 }) => {
   const inputRef = React.useRef<HTMLInputElement>(null)
 
@@ -20,23 +19,22 @@ export const GoogleSearch: React.FC<GoogleSearchProps> = ({
 
     if (inputRef.current) inputRef.current.value = ""
 
-    commandRunner(`focus --workspace 5`)
     const encoded = encodeURIComponent(search)
-    commandRunner(
-      `shell-exec ${explorerPath} https://www.google.com/search?q=${encoded}`,
-    )
+    const url = `${keys.webSearchUrl}${encoded}`
+    const openCmd = `shell-exec cmd /c start "" "${url}"`
+    commandRunner(openCmd)
   }
 
   return (
     <form onSubmit={(e) => onSubmit(e)}>
-      <Box style={{ justifyContent: "space-between", gap: "0.25vw" }}>
-        <i className="text-primary nf-fa-google"></i>
+      <Box className="justify-between gap-1 py-1.25 hover:bg-zinc-800/90">
+        <i className="text-primary nf-md-search_web" />
         <input
           ref={inputRef}
           name="q"
           className="bg-transparent border-none text-font outline-none"
           type="text"
-          placeholder="Search on Google"
+          placeholder="Buscar na web"
         />
       </Box>
     </form>
