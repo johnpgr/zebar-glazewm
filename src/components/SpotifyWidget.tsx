@@ -14,7 +14,7 @@ export const SpotifyWidget = () => {
     setSong(tempSong)
   }
 
-  const ref = React.useCallback((node: HTMLButtonElement | null) => {
+  const ref = React.useCallback((node: HTMLDivElement | null) => {
     if (node) {
       autoAnimate(node)
     }
@@ -44,9 +44,8 @@ export const SpotifyWidget = () => {
   }, [])
 
   return (
-    <Button
+    <div
       ref={ref}
-      variant="clean"
       onMouseEnter={() => {
         if (timeoutRef.current) {
           clearTimeout(timeoutRef.current)
@@ -59,14 +58,14 @@ export const SpotifyWidget = () => {
           setShowSettings(false)
         }, 300)
       }}
-      className="text-foreground no-underline"
+      className="flex flex-row items-center"
     >
       <a
         className="flex items-center gap-1 no-underline"
         href="spotify:home"
         target="_blank"
       >
-        <i className="text-primary nf-fa-spotify"></i>
+        <i className="text-primary nf-fa-spotify"/>
         {song.length > maxSongLength
           ? song.substring(0, maxSongLength) + "..."
           : song}
@@ -81,7 +80,7 @@ export const SpotifyWidget = () => {
               setTimeout(async () => await updateSong(), 1000)
             }}
           >
-            <i className="text-xs nf-md-skip_previous " />
+            <i className="text-[10px] nf-md-skip_previous " />
           </Button>
           <Button
             variant="clean"
@@ -91,7 +90,7 @@ export const SpotifyWidget = () => {
               setTimeout(async () => await updateSong(), 1000)
             }}
           >
-            <i className="text-xs nf-md-play_pause"></i>
+            <i className="text-[10px] nf-md-play_pause"></i>
           </Button>
           <Button
             variant="clean"
@@ -101,10 +100,10 @@ export const SpotifyWidget = () => {
               setTimeout(async () => await updateSong(), 1000)
             }}
           >
-            <i className="text-xs nf-md-skip_next" />
+            <i className="text-[10px] nf-md-skip_next" />
           </Button>
         </div>
       )}
-    </Button>
+    </div>
   )
 }

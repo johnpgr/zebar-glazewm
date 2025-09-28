@@ -22,8 +22,8 @@ export const Shortcut: React.FC<ShortcutProps> = ({
   }
 
   return (
-    <Box className="py-1 px-1 hover:bg-zinc-800/90">
-      <Button variant="clean" className="gap-0.5" onClick={onClick}>
+    <Box className="px-1 hover:bg-zinc-800/90">
+      <Button variant="clean" className="gap-1" onClick={onClick}>
         <i className={`text-primary ${iconClass} text-primary`}></i>
         {name}
       </Button>

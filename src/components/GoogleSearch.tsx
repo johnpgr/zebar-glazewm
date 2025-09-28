@@ -27,7 +27,7 @@ export const GoogleSearch: React.FC<GoogleSearchProps> = ({
 
   return (
     <form onSubmit={(e) => onSubmit(e)}>
-      <Box className="justify-between gap-1 py-1.25 hover:bg-zinc-800/90">
+      <Box className="justify-between gap-1 hover:bg-zinc-800/90">
         <i className="text-primary nf-md-search_web" />
         <input
           ref={inputRef}

@@ -40,7 +40,7 @@ export const Settings: React.FC<SettingsProps> = ({ widgetObj }) => {
               return (
                 <div
                   key={index}
-                  className="inline-flex justify-center items-center gap-1 text-xs accent-main"
+                  className="inline-flex justify-center items-center gap-0.5 text-xs accent-main"
                 >
                   <Checkbox
                     id={name}

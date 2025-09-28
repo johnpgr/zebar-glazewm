@@ -1,6 +1,6 @@
 import type { OutputMap } from "@/lib/providers"
 
-function getAppIcon(appId: string) {
+const AppIcon = ({ appId }: { appId: string }) => {
   if (/spotify/i.test(appId)) {
     return <i className="text-primary nf-md-spotify"></i>
   } else if (/msedge|edge/i.test(appId)) {
@@ -51,11 +51,12 @@ export const ActiveApp: React.FC<{ output: OutputMap }> = ({ output }) => {
     <>
       {output.glazewm && output.glazewm.focusedWorkspace && (
         <div className="flex items-center gap-1">
-          {output.glazewm.focusedWorkspace.children.map((child) => (
-            <span key={child.id}>
-              {child.type === "window" && getAppIcon(child.processName)}
-            </span>
-          ))}
+          {output.glazewm.focusedWorkspace.children.map(
+            (child) =>
+              child.type === "window" && (
+                <AppIcon key={child.id} appId={child.processName} />
+              ),
+          )}
         </div>
       )}
     </>

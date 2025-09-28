@@ -13,23 +13,17 @@ const dateFormat = Intl.DateTimeFormat("pt-BR", {
 
 export interface CalendarWidgetProps {
   dateOutput: DateOutput
-  glazeWmOutput: GlazeWmOutput
 }
 
 export const CalendarWidget: React.FC<CalendarWidgetProps> = ({
   dateOutput,
-  glazeWmOutput,
 }) => {
-  const handleClick = () => {
-    glazeWmOutput.runCommand("shell-exec ms-settings:dateandtime")
-  }
-
   return (
-    <Button onClick={handleClick} variant="clean" className="gap-1">
+    <a href="ms-settings:dateandtime" className="gap-1 flex items-center">
       <i className="text-primary nf-md-calendar_month" />
       <div>
         <span>{dateFormat.format(dateOutput.now).replaceAll(", ", " ")}</span>
       </div>
-    </Button>
+    </a>
   )
 }

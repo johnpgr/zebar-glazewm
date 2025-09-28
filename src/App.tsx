@@ -14,7 +14,7 @@ import { Button } from "./components/ui/Button"
 import { cn } from "./lib/utils"
 import { CalendarWidget } from "./components/CalendarWidget"
 
-function getBatteryIcon(batteryOutput: BatteryOutput) {
+const BatteryIcon = ({ batteryOutput }: { batteryOutput: BatteryOutput }) => {
   if (batteryOutput.chargePercent > 90)
     return <i className="text-primary nf-fa-battery_4"></i>
   if (batteryOutput.chargePercent > 70)
@@ -26,7 +26,7 @@ function getBatteryIcon(batteryOutput: BatteryOutput) {
   return <i className="text-primary nf-fa-battery_0"></i>
 }
 
-function getWeatherIcon(weatherOutput: WeatherOutput) {
+const WeatherIcon = ({ weatherOutput }: { weatherOutput: WeatherOutput }) => {
   switch (weatherOutput.status) {
     case "clear_day":
       return <i className="text-primary nf-weather-day_sunny"></i>
@@ -52,6 +52,8 @@ function getWeatherIcon(weatherOutput: WeatherOutput) {
       return <i className="text-primary nf-weather-day_lightning"></i>
     case "thunder_night":
       return <i className="text-primary nf-weather-night_alt_lightning"></i>
+    default:
+      return null
   }
 }
 
@@ -81,9 +83,9 @@ export const App: React.FC = () => {
   return (
     <div className="grid grid-cols-3 items-center h-full px-0.5vw py-0.5 whitespace-nowrap text-foreground text-xs overflow-hidden mx-1.25">
       <div className="flex items-center gap-1">
-        <Box className="gap-1">
-          <div className="flex items-center gap-0.25vw">
-            <i className="text-primary text-xs nf-custom-windows mr-0.5"></i>
+        <Box className="gap-1.5">
+          <div className="flex flex-row gap-1 items-center">
+            <i className="text-primary text-xs nf-custom-windows" />
             {output.host?.friendlyOsVersion}
           </div>
           {output.glazewm && (
@@ -123,18 +125,13 @@ export const App: React.FC = () => {
         )}
       </div>
 
-      <div className="justify-self-center">
-        <Box className="gap-1">
-          {showSpotifyWidget && <SpotifyWidget />}
-          {output.date && output.glazewm && (
-            <CalendarWidget
-              dateOutput={output.date}
-              glazeWmOutput={output.glazewm}
-            />
-          )}
-          {showActiveApp && output.glazewm && <ActiveApp output={output} />}
-        </Box>
-      </div>
+      <Box className="gap-1 justify-self-center">
+        {showSpotifyWidget && <SpotifyWidget />}
+        {output.date && output.glazewm && (
+          <CalendarWidget dateOutput={output.date} />
+        )}
+        {showActiveApp && output.glazewm && <ActiveApp output={output} />}
+      </Box>
 
       <div className="justify-self-end flex gap-1 items-center">
         {showGoogleSearch && output.glazewm && (
@@ -232,7 +229,7 @@ export const App: React.FC = () => {
                 {output.battery.isCharging && (
                   <span className="absolute text-[8px] left-[-8px] top-1 text-primary nf-md-power_plug" />
                 )}
-                {getBatteryIcon(output.battery)}
+                <BatteryIcon batteryOutput={output.battery} />
                 {Math.round(output.battery.chargePercent)}%
               </div>
             )}
@@ -240,7 +237,7 @@ export const App: React.FC = () => {
             {/* weather */}
             {output.weather && (
               <div className="flex items-center gap-1">
-                {getWeatherIcon(output.weather)}
+                <WeatherIcon weatherOutput={output.weather} />
                 {Math.round(output.weather.celsiusTemp)}°C
               </div>
             )}
